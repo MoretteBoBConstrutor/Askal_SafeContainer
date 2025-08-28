@@ -35,7 +35,10 @@ class SecureItemData
     ref array<ref SecureItemData> NestedItems;  // Para itens dentro de outros itens
     
     bool IsContainerAttachment;                 // Flag para identificar attachments do container
-   
+
+    // 🌡️ TEMPERATURA - NOVOS CAMPOS
+    bool HasTemperature; // Se o item suporta temperatura
+    float Temperature;   // Temperatura atual do item
 
     void SecureItemData()
     {
@@ -51,5 +54,8 @@ class SecureItemData
         HasInventory = false;
         NestedItems = new array<ref SecureItemData>();
         IsContainerAttachment = false;
+        // 🌡️ TEMPERATURA - INICIALIZAÇÃO
+        HasTemperature = false;
+        Temperature = 0.0;
     }
 }

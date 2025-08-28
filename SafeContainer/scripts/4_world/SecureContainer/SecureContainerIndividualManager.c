@@ -200,6 +200,15 @@ class SecureContainerIndividualManager
                 itemData.IsFood = true;
                 itemData.FoodStageValue = food.GetFoodStageType();
             }
+
+            // 🌡️ TEMPERATURA - SALVAMENTO
+            if (item.CanHaveTemperature())
+            {
+                itemData.HasTemperature = true;
+                itemData.Temperature = item.GetTemperature();
+                Print("[TEMPERATURA] Item " + itemData.ClassName + " salvo com temp: " + itemData.Temperature + "°C");
+            }
+
             //✅NOVA FUNÇÃO: Serializa itens anexados e Itens dentro de inventarios
             SerializeItemRecursive(item, itemData);
             //
@@ -307,6 +316,13 @@ class SecureContainerIndividualManager
                 {
                     food.ChangeFoodStage(itemData.FoodStageValue);
                 }
+            }
+
+            // 🌡️ TEMPERATURA - RESTAURAÇÃO
+            if (itemData.HasTemperature && restoredItem.CanHaveTemperature())
+            {
+                restoredItem.SetTemperatureDirect(itemData.Temperature);
+                Print("[TEMPERATURA] Item " + itemData.ClassName + " restaurado com temp: " + itemData.Temperature + "°C");
             }
 
             //✅NOVA FUNÇÃO: Restaura itens anexados e Itens dentro de inventarios
@@ -495,6 +511,13 @@ class SecureContainerIndividualManager
             itemData.IsFood = true;
             itemData.FoodStageValue = food.GetFoodStageType();
         }
+
+        // 🌡️ TEMPERATURA - SALVAMENTO RECURSIVO
+        if (item.CanHaveTemperature())
+        {
+            itemData.HasTemperature = true;
+            itemData.Temperature = item.GetTemperature();
+        }
     }
 
     // ✅ FUNÇÃO AUXILIAR NOVA
@@ -528,6 +551,12 @@ class SecureContainerIndividualManager
             {
                 food.ChangeFoodStage(itemData.FoodStageValue);
             }
+        }
+
+        // 🌡️ TEMPERATURA - RESTAURAÇÃO RECURSIVA
+        if (itemData.HasTemperature && item.CanHaveTemperature())
+        {
+            item.SetTemperatureDirect(itemData.Temperature);
         }
     }
 }
